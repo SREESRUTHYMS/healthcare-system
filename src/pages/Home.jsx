@@ -40,12 +40,12 @@ const MODULES = {
 };
 
 const TIMELINE = [
-  { n: "01", label: "Requirements & DB design", detail: "Understand requirements, design the database and wireframes." },
-  { n: "02", label: "Server-side logic", detail: "Build the API, database schemas, and endpoint tests." },
-  { n: "03", label: "Interface + integration", detail: "Build the UI from the wireframe and wire it to the backend." },
-  { n: "04", label: "Feature build-out", detail: "Implement appointments, records, billing, and notifications." },
-  { n: "05", label: "Testing & deployment", detail: "QA pass, bug fixes, and ship to production." },
-  { n: "06", label: "Final submission", detail: "Final review and handoff." },
+  { n: "01", label: "Register & build a profile", detail: "Patients sign up with personal details, medical history, and insurance information." },
+  { n: "02", label: "Find & book a doctor", detail: "Search by specialization, location, and availability, then confirm a slot instantly." },
+  { n: "03", label: "Consult & get diagnosed", detail: "The doctor reviews history, examines the patient, and records diagnosis and treatment notes." },
+  { n: "04", label: "Prescriptions & lab work", detail: "Prescriptions and lab orders post straight to the patient's record, ready to download." },
+  { n: "05", label: "Billing & payment", detail: "An itemized invoice is generated; pay online or route the claim through insurance." },
+  { n: "06", label: "Follow-up & recovery", detail: "Automated reminders keep follow-ups, refills, and repeat tests on schedule." },
 ];
 
 export default function Home() {
@@ -199,9 +199,9 @@ export default function Home() {
       {/* Timeline */}
       <Section
         id="timeline"
-        eyebrow="Build plan"
-        title="Six milestones"
-        subtitle="The build follows a one-month sprint plan, from wireframes to final submission."
+        eyebrow="Patient journey"
+        title="From first visit to full recovery"
+        subtitle="Every patient moves through the same six steps — Vitals keeps each one connected instead of scattered across paper and phone calls."
       >
         <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {TIMELINE.map((step) => (
