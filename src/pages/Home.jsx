@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Section from "../components/Section.jsx";
 import PulseDivider from "../components/PulseDivider.jsx";
+import { HeartIcon } from "../components/icons/MedicalIcons.jsx";
 
 const OBJECTIVES = [
   "Centralize patient information — history, diagnoses, prescriptions, and treatment plans.",
@@ -214,20 +215,22 @@ export default function Home() {
         </ol>
       </Section>
 
-      <Section className="pb-24 pt-16">
+            <Section className="pb-24 pt-16">
         <div className="rounded-2xl bg-teal px-8 py-14 text-center">
+          <HeartIcon className="mx-auto mb-4 flex justify-center [&_svg]:h-10 [&_svg]:w-10" />
           <h2 className="font-display text-3xl font-semibold text-mint sm:text-4xl">
-            Ready to see your dashboard?
+            Your care, all in one place
           </h2>
           <p className="mx-auto mt-3 max-w-md font-body text-mint/80">
-            Register as a patient, doctor, or admin to preview the role-based
-            workspace — no backend required to click around.
+            Register as a patient, doctor, or care team member — book
+            appointments, manage records, and stay on top of your health in
+            minutes.
           </p>
           <Link
             to="/register"
             className="mt-6 inline-block rounded-full bg-mint px-6 py-3 font-body text-sm font-semibold text-teal transition-colors hover:bg-white"
           >
-            Create an account
+            Create your account
           </Link>
         </div>
       </Section>
