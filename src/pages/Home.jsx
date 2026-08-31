@@ -219,7 +219,7 @@ export default function Home() {
         <div className="rounded-2xl bg-teal px-8 py-14 text-center">
           <HeartIcon className="mx-auto mb-4 flex justify-center [&_svg]:h-10 [&_svg]:w-10" />
           <h2 className="font-display text-3xl font-semibold text-mint sm:text-4xl">
-            Your care, all in one place
+            WE'RE HERE TO TAKE CARE OF YOU
           </h2>
           <p className="mx-auto mt-3 max-w-md font-body text-mint/80">
             Register as a patient, doctor, or care team member — book
