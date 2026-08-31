@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-mint text-ink font-body antialiased;
+}
+
+::selection {
+  background-color: #e8604c;
+  color: #f5f8f6;
+}
+
+/* Visible keyboard focus, kept everywhere */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #e8604c;
+  outline-offset: 2px;
+}
+
+@keyframes heartbeat-scale {
+  0%, 100% { transform: scale(1); }
+  15% { transform: scale(1.12); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.08); }
+  60% { transform: scale(1); }
+}
+
+@keyframes ekg-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes drip-fall {
+  0% { transform: translateY(0); opacity: 0; }
+  20% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(18px); opacity: 0; }
+}
+
+@keyframes ambulance-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes beacon-flash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.animate-heartbeat { animation: heartbeat-scale 2.2s ease-in-out infinite; }
+.animate-drip > * { animation: drip-fall 1.6s ease-in infinite; }
+.animate-ambulance { animation: ambulance-bob 1.4s ease-in-out infinite; }
+.animate-beacon { animation: beacon-flash 0.9s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
