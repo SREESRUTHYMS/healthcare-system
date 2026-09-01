@@ -1,5 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
 
+// Original illustrated avatar for the assistant persona "Nora" — not a
+// photo (avoids likeness/copyright issues), just a friendly flat-style
+// face built from SVG shapes in the app's existing teal/pulse palette.
+function NoraAvatar({ className = "" }) {
+  return (
+    <svg viewBox="0 0 64 64" className={className} fill="none">
+      <circle cx="32" cy="32" r="32" fill="#0D5C63" />
+      <path
+        d="M32 46c9 0 15-5.5 15-14.5S41 17 32 17s-15 5.5-15 14.5S23 46 32 46Z"
+        fill="#F6D9C9"
+      />
+      <path
+        d="M17 27c0-9 6-15 15-15s15 6 15 15c-3-1-6-4-7-7-3 4-9 6-15 6-3 0-6 1-8 3v-2Z"
+        fill="#3D2A22"
+      />
+      <circle cx="26" cy="31" r="2" fill="#12262A" />
+      <circle cx="38" cy="31" r="2" fill="#12262A" />
+      <path d="M27 38c1.5 1.6 3.2 2.4 5 2.4s3.5-.8 5-2.4" stroke="#12262A" strokeWidth="1.6" strokeLinecap="round" />
+      <circle cx="52" cy="12" r="6" fill="#E8604C" stroke="#F5F8F6" strokeWidth="2" />
+    </svg>
+  );
+}
+
 // Floating AI assistant, bottom-right. Ships with canned responses so the
 // UI is fully clickable with no backend — swap `getAssistantReply` for a
 // real call to Claude (or any LLM) via your backend once you're ready.
@@ -46,10 +69,17 @@ function getAssistantReply(message) {
 }
 
 export default function ChatAssistant() {
-  const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false);
+  const [showGreeting, setShowGreeting] = useState(true);
   const [messages, setMessages] = useState([
-    { role: "assistant", text: "Hi! I'm the Vitals assistant. Ask me about appointments, records, or billing." },
+    { role: "assistant", text: "Hi! I'm Nora, your care assistant. Ask me about appointments, records, or billing." },
   ]);
+
+  // Auto-dismiss the greeting bubble after a few seconds
+  useEffect(() => {
+    const t = setTimeout(() => setShowGreeting(false), 6000);
+    return () => clearTimeout(t);
+  }, []);
   const [input, setInput] = useState("");
   const scrollRef = useRef(null);
 
@@ -67,14 +97,17 @@ export default function ChatAssistant() {
     }, 500);
   };
 
-  return (
-    <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end">
+    return (
+    <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3">
       {open && (
         <div className="mb-3 flex h-[420px] w-[320px] flex-col overflow-hidden rounded-2xl border border-teal/15 bg-white shadow-[0_20px_60px_-15px_rgba(13,92,99,0.4)] sm:w-[360px]">
           <div className="flex items-center justify-between bg-teal px-4 py-3">
-            <div>
-              <p className="font-display text-sm font-semibold text-mint">Vitals assistant</p>
-              <p className="font-mono text-[10px] uppercase tracking-wide text-mint/60">Online · demo mode</p>
+                        <div className="flex items-center gap-2">
+              <NoraAvatar className="h-8 w-8 shrink-0" />
+              <div>
+                <p className="font-display text-sm font-semibold text-mint">Nora</p>
+                <p className="font-mono text-[10px] uppercase tracking-wide text-mint/60">Care assistant · online</p>
+              </div>
             </div>
             <button
               onClick={() => setOpen(false)}
@@ -135,27 +168,33 @@ export default function ChatAssistant() {
         </div>
       )}
 
-      <button
-        onClick={() => setOpen((v) => !v)}
-        aria-label={open ? "Close assistant" : "Open assistant"}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-teal text-mint shadow-[0_12px_30px_-8px_rgba(13,92,99,0.6)] transition-transform hover:scale-105"
-      >
-        {open ? (
-          <span className="text-xl">✕</span>
-        ) : (
-          <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none">
-            <path
-              d="M12 3C7 3 3 6.6 3 11c0 2.4 1.2 4.6 3.1 6.1L5 21l4.3-1.7c.9.2 1.8.3 2.7.3 5 0 9-3.6 9-8S17 3 12 3Z"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinejoin="round"
-            />
-            <circle cx="8.5" cy="11" r="1" fill="currentColor" />
-            <circle cx="12" cy="11" r="1" fill="currentColor" />
-            <circle cx="15.5" cy="11" r="1" fill="currentColor" />
-          </svg>
+            <div className="flex items-center gap-3">
+        {!open && showGreeting && (
+          <div className="relative rounded-2xl border border-teal/15 bg-white px-4 py-2.5 shadow-[0_12px_30px_-12px_rgba(13,92,99,0.4)]">
+            <button
+              onClick={() => setShowGreeting(false)}
+              aria-label="Dismiss greeting"
+              className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-ink/70 text-[9px] text-mint"
+            >
+              ✕
+            </button>
+            <p className="font-body text-sm text-ink/80">
+              Hi, I'm Nora — here to assist you 👋
+            </p>
+          </div>
         )}
-      </button>
+
+        <button
+          onClick={() => {
+            setOpen((v) => !v);
+            setShowGreeting(false);
+          }}
+          aria-label={open ? "Close assistant" : "Open assistant"}
+          className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-full bg-teal text-mint shadow-[0_12px_30px_-8px_rgba(13,92,99,0.6)] transition-transform hover:scale-105"
+        >
+          {open ? <span className="text-xl">✕</span> : <NoraAvatar className="h-full w-full" />}
+        </button>
+      </div>
     </div>
   );
 }
